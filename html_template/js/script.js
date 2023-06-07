@@ -5,6 +5,7 @@ function askBirthYear(idBirthYear, idBirthMonth) {
     var idAge
     const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"]
 
+    //Etape 4
     if (idBirthMonth <= months[5]) {
         idAge = 2022 - idBirthYear
         return idAge
