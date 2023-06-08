@@ -3,10 +3,10 @@ function askBirthYear(idBirthYear, idBirthMonth) {
     var idBirthYear = prompt("Quel est votre année de naissance?")
     var idBirthMonth = prompt("Quel est votre mois de naissance?")
     var idAge
-    const months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"]
+    const months = new Set(["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"]);
 
     //Etape 4
-    if (idBirthMonth <= months[5]) {
+    if (idBirthMonth <= months.has("Juin")) {
         idAge = 2022 - idBirthYear
         return idAge
     } else {
