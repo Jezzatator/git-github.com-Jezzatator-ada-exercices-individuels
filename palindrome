@@ -1,0 +1,130 @@
+// Date object
+const date = new Date();
+
+let currentDay = String(date.getDate()).padStart(2, '0');
+
+let currentMonth = String(date.getMonth() + 1).padStart(2, "0");
+
+let currentYear = date.getFullYear();
+
+// we will display the date as DD-MM-YYYY 
+
+let currentDate = `${currentDay}/${currentMonth}/${currentYear}`;
+
+const annif = "29/02/2024";
+const palin = "10/02/2001";
+
+const maxDaysInMonth = (day, month, year) => {
+
+    let dayInt = parseInt(day)
+    let monthInt = parseInt(month)
+    let yearInt = parseInt(year)
+
+    let m31 = [1, 3, 5, 7, 8, 10, 12]
+    let m30 = [4, 6, 9, 11]
+    let Fev = 2
+    let anneBis = false
+
+    if (yearInt % 4 == 0) {
+        anneBis = true
+    }
+
+    if (0 < dayInt && dayInt < 31 && m31.indexOf(monthInt) !== -1) {
+        return true
+    } else if (0 < dayInt && dayInt < 30 && m30.indexOf(monthInt) !== -1) {
+        return true
+    } else if (0 < dayInt && dayInt < 29 && Fev == monthInt && anneBis == false) {
+        return true
+    } else if (0 < dayInt && dayInt < 30 && Fev == monthInt && anneBis == true) {
+        return true
+    } else {
+        return false
+    }
+};
+
+const maxMonthsInYear = (month) => { if (0 < month && month < 13) { return true } else { return false } };
+const isYear = (year) => { if (year.length == 4) { return true } else { return false } };
+
+
+//Etape 1
+const isDateValid = (date) => {
+    const dateSplited = date.split("/");
+    let day = (dateSplited[0]);
+    let month = (dateSplited[1]);
+    let year = (dateSplited[2]);
+
+
+    if (maxDaysInMonth(day, month, year) == true && maxMonthsInYear(month) == true && isYear(year) == true) {
+        console.log("date valide")
+        return true
+    } else {
+        console.log("date non valide")
+        return false
+    }
+
+}
+
+//console.log(isDateValid(currentDate))
+
+//Etape 2
+// const isPalindrome = (day_month, year) => {
+//     const dateSplited = date.split("/");
+//     let day_month = dateSplited[0] + dateSplited[1];
+//     let year = dateSplited[2].split("").reverse().join("");
+
+//     if (day_month == year) { return true } else { return false }
+// }
+
+//console.log(isPalindrome(palin))
+
+//Etape 3
+
+const getNextPalindromes = (x) => {
+    //recuperation de l'année en cours et ransformation en Int
+    const dateSplited = currentDate.split("/")
+    let year = (dateSplited[2]);
+    //Avoir l'année en Int permet de rajouter simplement une année plus et de l'utiliser comme donné de reference pour la boucle
+    let yearCount = parseInt(year)
+
+    //Création du tabeau de resultats
+    let results = []
+
+    //boucle pour le nombre de resutlats voulu 
+    while (results.length < x) {
+
+        //Hachage de l'année en Jour et Mois. ex: 2001 -> 10/02 date valide année palindrome ; 2023 -> 32/02 date invalide pas de palindrome possible
+        let yearCountStr = yearCount.toString()
+        let yearReversed = yearCountStr.split("").reverse().join("")
+        let yearMonth = yearReversed.slice(2)
+        let yearDay = yearReversed.slice(0, 2)
+
+
+        // Test si le Jour et Moi de l'année peut etre une date valide 
+        if ((maxDaysInMonth(yearDay, yearMonth, yearCount) === true)) {
+            // si oui la date est ajoutée au tableau
+            results.push(`${yearDay}/${yearMonth}/${yearCount}`)
+            yearCount += 1
+        } else {
+            // si non on regarde l'année d'après 
+            yearCount += 1
+        }
+    }
+    console.log("results: ")
+    return results
+}
+
+//console.log(getNextPalindromes(8))
+
+// Etape 4 
+
+const isPalindrome = (str) => {
+    if (str == str.split("").reverse().join("")) { return true } else { return false }
+}
+
+const isDatePalindrome = (date) => {
+    const dateSplited = date.split("/");
+    let dateGlued = dateSplited[0] + dateSplited[1] + dateSplited[2];
+    return isPalindrome(dateGlued)
+}
+
+console.log(isDatePalindrome(palin))
